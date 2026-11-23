@@ -15,6 +15,7 @@ To explore the TeachingRatings dataset and understand its basic statistical stru
 
 ## Files
 - `practical2.py` - Python implementation
+- `Lab Manual - Practical 2 - Rating Dataset.pdf` - Practical lab manual
 - `output/beauty_histogram.png` - Generated histogram
 - `data/teachingratings.csv` - Dataset
 

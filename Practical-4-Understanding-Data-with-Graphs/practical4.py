@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 # ============================================================
 # PRACTICAL 4 - UNDERSTANDING DATA WITH GRAPHS
@@ -10,7 +11,11 @@ import matplotlib.pyplot as plt
 # Load Dataset
 # ------------------------------------------------------------
 
-ratings_df = pd.read_csv("data/teachingratings.csv")
+project_folder = Path(__file__).parent
+output_dir = project_folder / "output"
+output_dir.mkdir(exist_ok=True)
+
+ratings_df = pd.read_csv(project_folder / "data" / "teachingratings.csv")
 
 print("=" * 70)
 print("PRACTICAL 4 - UNDERSTANDING DATA WITH GRAPHS")
@@ -103,7 +108,7 @@ plt.xticks(rotation=0)
 plt.tight_layout()
 
 plt.savefig(
-    "output/q2_average_evaluation_by_division.png",
+    output_dir / "q2_average_evaluation_by_division.png",
     dpi=300,
     bbox_inches="tight"
 )
@@ -136,7 +141,7 @@ plt.title("Age vs Teaching Evaluation Score")
 plt.tight_layout()
 
 plt.savefig(
-    "output/q3_age_vs_evaluation.png",
+    output_dir / "q3_age_vs_evaluation.png",
     dpi=300,
     bbox_inches="tight"
 )
@@ -177,7 +182,7 @@ plt.legend(title="Gender")
 plt.tight_layout()
 
 plt.savefig(
-    "output/q4_age_vs_evaluation_by_gender.png",
+    output_dir / "q4_age_vs_evaluation_by_gender.png",
     dpi=300,
     bbox_inches="tight"
 )
@@ -223,7 +228,7 @@ plt.legend(title="Group")
 plt.tight_layout()
 
 plt.savefig(
-    "output/q5_age_vs_evaluation_gender_tenure.png",
+    output_dir / "q5_age_vs_evaluation_gender_tenure.png",
     dpi=300,
     bbox_inches="tight"
 )

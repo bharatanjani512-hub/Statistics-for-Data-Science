@@ -15,6 +15,7 @@ To perform descriptive statistical analysis on the TeachingRatings dataset.
 
 ## Files
 - `practical3.py` - Python implementation
+- `Lab Manual - Practical 3 - Understand Descriptive stats.pdf` - Practical lab manual
 - `data/teachingratings.csv` - Dataset
 
 ## Tools Used

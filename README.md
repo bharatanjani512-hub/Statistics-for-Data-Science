@@ -39,6 +39,16 @@ The practicals use Python and commonly used data science libraries to explore st
 - Visual Studio Code
 - Git and GitHub
 
+## Setup and Installation
+
+Clone the repository and install the required dependencies:
+
+```bash
+git clone https://github.com/bharatanjani512-hub/Statistics-for-Data-Science.git
+cd Statistics-for-Data-Science
+pip install -r requirements.txt
+```
+
 ## Repository Structure
 
 Each practical has its own folder containing its Python implementation and, where applicable, datasets, generated visualizations and practical reports.

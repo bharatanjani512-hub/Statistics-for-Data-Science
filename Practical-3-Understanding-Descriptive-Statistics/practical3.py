@@ -1,12 +1,14 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 
 # ---------------------------------------------------------
 # Load the dataset
 # ---------------------------------------------------------
 
-ratings_df = pd.read_csv("data/teachingratings.csv")
+data_path = Path(__file__).parent / "data" / "teachingratings.csv"
+ratings_df = pd.read_csv(data_path)
 
 print("Dataset shape:")
 print(ratings_df.shape)
