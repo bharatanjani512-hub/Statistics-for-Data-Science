@@ -25,7 +25,7 @@ The practicals use Python and commonly used data science libraries to explore st
 | 8 | [Decision Trees and Its Maxdepth](Practical-8-Decision-Trees-and-Maxdepth/README.md) | Entropy, Information Gain, Gini Index and Decision Trees |
 | 9 | [K-Nearest Neighbours (KNN)](Practical-9-KNN/README.md) | Classification, feature scaling and model evaluation |
 | 10 | [Wine Dataset Analysis and PCA](Practical-10-Wine-Dataset-PCA/README.md) | Covariance, scaling and dimensionality reduction |
-| 11 | [Simplifying a Cancer Diagnostic Panel (PCA & Clinical Reduction)](Practical-11-Cancer-Diagnostic-Panel-PCA/README.md) | Standardisation, scree & cumulative variance, loadings, Pipeline 5-fold CV |
+| 11 | [Anjani_Finalpractical - Simplifying a Cancer Diagnostic Panel](Anjani_Finalpractical/README.md) | Standardisation, scree & cumulative variance, loadings, Pipeline 5-fold CV |
 
 ## Technologies and Libraries
 

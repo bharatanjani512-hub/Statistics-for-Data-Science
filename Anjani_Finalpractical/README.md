@@ -1,4 +1,4 @@
-# Practical 11: Simplifying a Cancer Diagnostic Panel (PCA & Clinical Feature Reduction)
+# Practical 11: Anjani_Finalpractical - Simplifying a Cancer Diagnostic Panel (PCA & Clinical Feature Reduction)
 
 ## Objective
 To evaluate whether a reduced Principal Component Analysis (PCA) panel can replace a full 30-feature cell nucleus biopsy panel without sacrificing the hospital lab's ability to differentiate malignant from benign breast tumors.
@@ -130,5 +130,5 @@ To prevent data leakage, both `StandardScaler` and `PCA` are fitted strictly wit
 
 From the repository root:
 ```bash
-python Practical-11-Cancer-Diagnostic-Panel-PCA/practical11.py
+python Anjani_Finalpractical/practical11.py
 ```

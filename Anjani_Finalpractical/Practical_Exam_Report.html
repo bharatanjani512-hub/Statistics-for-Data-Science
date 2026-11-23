@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Anjani_Finalpractical - Simplifying a Cancer Diagnostic Panel</title>
+<style>
+  body {
+    font-family: 'Arial', 'Calibri', 'Helvetica', sans-serif;
+    color: #222222;
+    background-color: #ffffff;
+    line-height: 1.6;
+    margin: 40px auto;
+    max-width: 850px;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    text-decoration: underline;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 25px;
+  }
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 8px;
+    color: #111;
+  }
+  h3 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 6px;
+  }
+  p, li {
+    font-size: 13px;
+  }
+  .meta-box {
+    background-color: #f8f9fa;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding: 12px 18px;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  .meta-box table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .meta-box td {
+    padding: 4px 8px;
+    border: none;
+    font-size: 13px;
+  }
+  .code-block {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 14px 18px;
+    border-radius: 6px;
+    font-family: 'Consolas', 'Menlo', 'Courier New', monospace;
+    font-size: 11.5px;
+    line-height: 1.5;
+    overflow-x: auto;
+    margin: 12px 0 16px 0;
+  }
+  .code-block .keyword { color: #569cd6; font-weight: bold; }
+  .code-block .comment { color: #6a9955; font-style: italic; }
+  .code-block .string { color: #ce9178; }
+  .code-block .function { color: #dcdcaa; }
+  .output-box {
+    background-color: #181818;
+    color: #f1f1f1;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: 'Consolas', 'Menlo', 'Courier New', monospace;
+    font-size: 11px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    margin: 12px 0 16px 0;
+    border-left: 4px solid #007acc;
+  }
+  .img-container {
+    text-align: center;
+    margin: 15px 0 25px 0;
+  }
+  .img-container img {
+    max-width: 90%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .ans-text {
+    font-size: 13px;
+    background-color: #f1f8ff;
+    border-left: 4px solid #0366d6;
+    padding: 10px 14px;
+    margin: 8px 0 14px 0;
+  }
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 18px 0;
+    font-size: 12.5px;
+  }
+  table.data-table th, table.data-table td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    text-align: left;
+  }
+  table.data-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  .submission-footer {
+    margin-top: 40px;
+    border-top: 2px solid #333;
+    padding-top: 20px;
+  }
+  .page-break {
+    page-break-after: always;
+  }
+</style>
+</head>
+<body>
+
+<h1>ANJANI_FINALPRACTICAL: SIMPLIFYING A CANCER DIAGNOSTIC PANEL</h1>
+<div class="subtitle">MSc Data Science | Subject: Statistics for Data Science | Shoolini University</div>
+
+<div class="meta-box">
+  <table>
+    <tr>
+      <td><strong>Student Name:</strong> Anjani Bharat</td>
+      <td><strong>Date:</strong> November 2026</td>
+    </tr>
+    <tr>
+      <td><strong>Reg. No.:</strong> PGD202563026</td>
+      <td><strong>Submission Type:</strong> Individual Practical Exam</td>
+    </tr>
+    <tr>
+      <td colspan="2"><strong>GitHub Repository:</strong> <a href="https://github.com/bharatanjani512-hub/Statistics-for-Data-Science" target="_blank">https://github.com/bharatanjani512-hub/Statistics-for-Data-Science</a></td>
+    </tr>
+    <tr>
+      <td colspan="2"><strong>Faculty:</strong> Anitya Kumar Gupta</td>
+    </tr>
+  </table>
+</div>
+
+<h2>Objective</h2>
+<p>
+The objective of this practical exam is to evaluate whether a reduced Principal Component Analysis (PCA) diagnostic panel can replace a full 30-feature cell nucleus biopsy panel without losing the hospital lab's ability to accurately differentiate malignant from benign tumors.
+</p>
+
+<h2>Dataset Information</h2>
+<p>
+The dataset used is the <strong>Breast Cancer Wisconsin (Diagnostic) Dataset</strong> (loaded via <code>sklearn.datasets.load_breast_cancer</code>). It contains <strong>569 biopsy observations</strong> (357 benign, 212 malignant) and <strong>30 continuous morphological features</strong> describing characteristics of cell nuclei extracted from Fine Needle Aspirates (FNA).
+</p>
+
+<hr style="border: 0; border-top: 1px solid #ddd; margin: 25px 0;">
+
+<h2>SECTION 1: PROMPT USED</h2>
+<p>The following prompt was used to generate and execute the solution:</p>
+<div class="code-block" style="background-color: #2b2b2b;">
+"A hospital lab measures 30 features of cell nuclei from breast-tissue biopsies. The lab wants to know whether a few combined indicators can replace the full panel without losing the ability to tell malignant from benign tumours.
+
+from sklearn.datasets import load_breast_cancer
+data = load_breast_cancer(as_frame=True)
+X, y = data.data, data.target # y: 0 = malignant, 1 = benign
+
+The code should perform the following tasks:
+1. Standardise the 30 features and fit PCA with all components.
+2. Draw a scree plot and a cumulative explained-variance plot. Report how many components explain at least 90% and 95% of the variance.
+3. Plot the samples on PC1 vs PC2, coloured by diagnosis.
+4. Print the five features with the largest absolute loadings on PC1 and on PC2.
+5. Train a logistic regression (5-fold CV accuracy) on (a) all 30 standardised features and (b) only the first k components, where k gives 90% variance. Fit the scaler and PCA inside a Pipeline so there is no leakage.
+
+Follow up question: Mention the responses in ReadMe file
+Q1. What share of variance does PC1 now explain, and which feature dominates it? Explain why standardisation changes the result so much.
+Q2. Would you recommend the reduced panel to the lab? Give one statistical and one practical reason, and say what you lose in interpretability."
+</div>
+
+<hr style="border: 0; border-top: 1px solid #ddd; margin: 25px 0;">
+
+<h2>SECTION 2: TASKS, IMPLEMENTATION, AND OUTPUTS</h2>
+
+<h3>Task 1: Standardise the 30 features and fit PCA with all components</h3>
+<div class="ans-text">
+<strong>Ans:</strong> The 30 cell nucleus features operate on drastically different physical scales (e.g. mean area in hundreds of square micrometers vs. fractal dimension < 0.1). <code>StandardScaler</code> rescales each feature to mean 0 and variance 1, and PCA is fitted with all 30 orthogonal components.
+</div>
+
+<p><strong>Input / Code:</strong></p>
+<div class="code-block">
+<span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_breast_cancer
+<span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler
+<span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA
+
+data = load_breast_cancer(as_frame=<span class="keyword">True</span>)
+X, y = data.data, data.target
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+pca = PCA(n_components=X.shape[<span class="string">1</span>], random_state=<span class="string">42</span>)
+X_pca = pca.fit_transform(X_scaled)
+</div>
+
+<p><strong>Output:</strong></p>
+<div class="output-box">
+Total biopsy samples: 569
+Total cell nuclei features: 30
+Standardisation complete: Mean = 0.0, Standard Deviation = 1.0 for each feature.
+PCA fitted successfully with all 30 components.
+Transformed coordinates matrix shape: (569, 30)
+</div>
+
+<div class="page-break"></div>
+
+<h3>Task 2: Scree plot and Cumulative Explained-Variance Plot</h3>
+<div class="ans-text">
+<strong>Ans:</strong> PC1 individually explains <strong>44.27%</strong> of the variance, and PC2 explains <strong>18.97%</strong> (63.24% combined). 
+To explain at least <strong>90% of the variance</strong>, <strong>7 components</strong> are required (explaining <strong>91.01%</strong>).
+To explain at least <strong>95% of the variance</strong>, <strong>10 components</strong> are required (explaining <strong>95.16%</strong>).
+</div>
+
+<p><strong>Input / Code:</strong></p>
+<div class="code-block">
+explained_var_ratio = pca.explained_variance_ratio_
+cumulative_var_ratio = np.cumsum(explained_var_ratio)
+
+k_90 = int(np.argmax(cumulative_var_ratio >= <span class="string">0.90</span>) + <span class="string">1</span>)
+k_95 = int(np.argmax(cumulative_var_ratio >= <span class="string">0.95</span>) + <span class="string">1</span>)
+
+print(<span class="string">f"Components for >= 90% variance: k = {k_90} ({cumulative_var_ratio[k_90-1]*100:.2f}%)"</span>)
+print(<span class="string">f"Components for >= 95% variance: k = {k_95} ({cumulative_var_ratio[k_95-1]*100:.2f}%)"</span>)
+</div>
+
+<p><strong>Output Plot (Scree & Cumulative Variance):</strong></p>
+<div class="img-container">
+  <img src="output/task2_scree_and_cumulative_variance.png" alt="Task 2 Scree Plot">
+</div>
+
+<h3>Task 3: Plot samples on PC1 vs PC2, coloured by diagnosis</h3>
+<div class="ans-text">
+<strong>Ans:</strong> The 2D projection reveals distinct cluster separation between benign and malignant tumors primarily along the PC1 axis. Malignant tumors exhibit positive PC1 scores (associated with higher nuclear irregularity and concavity), whereas benign tumors concentrate on negative PC1 values.
+</div>
+
+<p><strong>Output Plot (PC1 vs PC2 Projection):</strong></p>
+<div class="img-container">
+  <img src="output/task3_pc1_vs_pc2_diagnosis.png" alt="Task 3 PC1 vs PC2">
+</div>
+
+<div class="page-break"></div>
+
+<h3>Task 4: Five features with largest absolute loadings on PC1 and PC2</h3>
+<div class="ans-text">
+<strong>Ans:</strong> PC1 is governed by cell shape irregularity and concavity, while PC2 is governed by fractal dimension and fine boundary texture.
+</div>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Top 5 on PC1 (Shape / Concavity)</th>
+      <th>Loading</th>
+      <th>Top 5 on PC2 (Texture / Fractal Dimension)</th>
+      <th>Loading</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><strong>mean concave points</strong></td>
+      <td>+0.2609</td>
+      <td><strong>mean fractal dimension</strong></td>
+      <td>+0.3666</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>mean concavity</strong></td>
+      <td>+0.2584</td>
+      <td><strong>fractal dimension error</strong></td>
+      <td>+0.2801</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><strong>worst concave points</strong></td>
+      <td>+0.2509</td>
+      <td><strong>worst fractal dimension</strong></td>
+      <td>+0.2753</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><strong>mean compactness</strong></td>
+      <td>+0.2393</td>
+      <td><strong>mean radius</strong></td>
+      <td>-0.2339</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><strong>worst perimeter</strong></td>
+      <td>+0.2366</td>
+      <td><strong>compactness error</strong></td>
+      <td>+0.2327</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Output Plot (Loadings Bar Chart):</strong></p>
+<div class="img-container">
+  <img src="output/task4_pca_loadings.png" alt="Task 4 Loadings">
+</div>
+
+<h3>Task 5: Logistic Regression with 5-Fold CV Pipeline (No Data Leakage)</h3>
+<div class="ans-text">
+<strong>Ans:</strong> Using <code>sklearn.pipeline.Pipeline</code>, the scaler and PCA were strictly fitted on the training split of each fold:
+<ul>
+  <li><strong>Model (a) All 30 Standardised Features:</strong> <strong>97.37%</strong> (&plusmn; 1.66%)</li>
+  <li><strong>Model (b) Reduced Panel (First 7 PCA Components):</strong> <strong>96.14%</strong> (&plusmn; 1.53%)</li>
+  <li><strong>Performance Delta:</strong> Accuracy drops by only <strong>1.23%</strong> despite reducing the diagnostic panel from 30 features down to 7 (a <strong>76.7% dimension reduction</strong>).</li>
+</ul>
+</div>
+
+<p><strong>Output Plot (Model Performance Comparison):</strong></p>
+<div class="img-container">
+  <img src="output/task5_model_cv_comparison.png" alt="Task 5 Model Comparison">
+</div>
+
+<div class="page-break"></div>
+
+<h2>SECTION 3: RESPONSES TO FOLLOW-UP QUESTIONS</h2>
+
+<h3>Q1. What share of variance does PC1 now explain, and which feature dominates it? Explain why standardisation changes the result so much.</h3>
+<div class="ans-text">
+<p><strong>1. Share of Variance & Dominant Feature (Standardised):</strong><br>
+Standardised PC1 explains <strong>44.27%</strong> of the total variance. The leading feature on PC1 is <code>mean concave points</code> (loading = <strong>+0.2609</strong>), followed closely by <code>mean concavity</code> (<strong>+0.2584</strong>) and <code>worst concave points</code> (<strong>+0.2509</strong>). Note that no single feature overwhelmingly dominates; rather, multiple morphological features measuring nuclear concavity, perimeter, and irregularity share moderate, balanced contributions (0.23 to 0.26).</p>
+
+<p><strong>2. Contrast with Unstandardised PCA:</strong><br>
+In unstandardised PCA, PC1 explains <strong>98.20%</strong> of the variance and is almost completely dominated by <code>worst area</code> (loading = 0.8521) and <code>mean area</code> (loading = 0.5168), while other features receive loadings near 0.00.</p>
+
+<p><strong>3. Why Standardisation Changes the Result So Much:</strong><br>
+PCA maximizes empirical variance along orthogonal projection axes. When unstandardised, features with large physical measurement scales naturally exhibit enormous numerical variances (e.g., <code>worst area</code> variance is &approx; 324,165, whereas <code>concavity</code> variance is &approx; 0.006). Without standardisation, PCA aligns almost entirely with cell area simply due to units of measurement (&mu;m&sup2; vs. dimensionless ratios). Standardisation (z-score scaling) scales all feature variances to 1.0, enabling PCA to discover true biological covariation across all 30 indicators rather than scale artifacts.</p>
+</div>
+
+<h3>Q2. Would you recommend the reduced panel to the lab? Give one statistical and one practical reason, and say what you lose in interpretability.</h3>
+<div class="ans-text">
+<p><strong>Recommendation: YES</strong>, the reduced panel (first 7 PCA components) is recommended for clinical diagnostic screening.</p>
+
+<p><strong>1. Statistical Reason:</strong><br>
+The reduced panel retains <strong>91.01% of total variance</strong> while achieving a <strong>96.14% 5-fold cross-validation accuracy</strong>, which is within 1.23% of the full 30-feature baseline (97.37%). Additionally, the 7-component model exhibits lower fold-to-fold variance (&plusmn;1.53% vs. &plusmn;1.66%), eliminating collinearity and mitigating overfitting.</p>
+
+<p><strong>2. Practical Reason:</strong><br>
+Extracting, segmenting, and performing clinical quality control on 30 individual nuclear biomarkers per patient biopsy is expensive, computationally intensive, and increases the likelihood of measurement noise or missing assays. A condensed 7-component panel accelerates biopsy processing, reduces laboratory turnaround time, and lowers test costs.</p>
+
+<p><strong>3. Loss in Interpretability:</strong><br>
+Principal components are abstract linear combinations (weighted sums) of all 30 original features. Pathologists understand direct physical cytology metrics (e.g. <em>"mean nuclear radius exceeds 18 &mu;m"</em>). A composite score like <em>"PC1 = +2.48"</em> carries no direct histological or biological meaning under a microscope, making it harder for clinicians to explain specific diagnostic boundaries to patients or justify decisions in clinical-legal contexts.</p>
+</div>
+
+<div class="submission-footer">
+  <h2>CONCLUSION</h2>
+  <p>
+  Principal Component Analysis successfully simplified the 30-feature breast cancer diagnostic panel into 7 orthogonal components while retaining 91.01% of total variance and 96.14% cross-validation accuracy. Standardisation was proven critical to avoid artificial dominance by cell area. The reduced panel is statistically robust and practically advantageous for high-throughput laboratory diagnosis.
+  </p>
+  
+  <table style="width: 100%; margin-top: 25px;">
+    <tr>
+      <td>
+        <strong>Submitted by:</strong><br>
+        Name: Anjani Bharat<br>
+        Reg. No.: PGD202563026<br>
+        Course: MSc Data Science
+      </td>
+      <td style="text-align: right;">
+        <strong>Submitted to:</strong><br>
+        Faculty: Anitya Kumar Gupta<br>
+        Department of Data Science<br>
+        Shoolini University
+      </td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>
