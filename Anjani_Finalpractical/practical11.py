@@ -52,10 +52,10 @@ print(f"\nFeature names (30 features):\n{list(X.columns)}")
 
 
 # =============================================================================
-# TASK 1: STANDARDISE THE 30 FEATURES AND FIT PCA WITH ALL COMPONENTS
+# STEP 1: STANDARDISE THE 30 FEATURES AND FIT PCA WITH ALL COMPONENTS
 # =============================================================================
 print("\n" + "=" * 80)
-print("TASK 1: STANDARDISE 30 FEATURES & FIT FULL PCA")
+print("STEP 1: STANDARDISE 30 FEATURES & FIT FULL PCA")
 print("=" * 80)
 
 scaler = StandardScaler()
@@ -70,10 +70,10 @@ print(f"Transformed coordinates matrix shape: {X_pca.shape}")
 
 
 # =============================================================================
-# TASK 2: SCREE PLOT & CUMULATIVE EXPLAINED-VARIANCE PLOT
+# STEP 2: SCREE PLOT & CUMULATIVE EXPLAINED-VARIANCE PLOT
 # =============================================================================
 print("\n" + "=" * 80)
-print("TASK 2: SCREE PLOT & CUMULATIVE EXPLAINED VARIANCE")
+print("STEP 2: SCREE PLOT & CUMULATIVE EXPLAINED VARIANCE")
 print("=" * 80)
 
 explained_var_ratio = pca.explained_variance_ratio_
@@ -125,10 +125,10 @@ print(f"Plot saved successfully to: {scree_plot_path.name}")
 
 
 # =============================================================================
-# TASK 3: PLOT SAMPLES ON PC1 VS PC2 COLOURED BY DIAGNOSIS
+# STEP 3: PLOT SAMPLES ON PC1 VS PC2 COLOURED BY DIAGNOSIS
 # =============================================================================
 print("\n" + "=" * 80)
-print("TASK 3: 2D PROJECTION ON PC1 VS PC2 COLOURED BY DIAGNOSIS")
+print("STEP 3: 2D PROJECTION ON PC1 VS PC2 COLOURED BY DIAGNOSIS")
 print("=" * 80)
 
 plt.figure(figsize=(9, 7))
@@ -180,10 +180,10 @@ print(f"Plot saved successfully to: {pc_scatter_path.name}")
 
 
 # =============================================================================
-# TASK 4: FIVE FEATURES WITH LARGEST ABSOLUTE LOADINGS ON PC1 AND PC2
+# STEP 4: FIVE FEATURES WITH LARGEST ABSOLUTE LOADINGS ON PC1 AND PC2
 # =============================================================================
 print("\n" + "=" * 80)
-print("TASK 4: TOP 5 ABSOLUTE LOADINGS ON PC1 AND PC2")
+print("STEP 4: TOP 5 ABSOLUTE LOADINGS ON PC1 AND PC2")
 print("=" * 80)
 
 # components_ has shape (n_components, n_features) -> transpose to (features, components)
@@ -240,10 +240,10 @@ print(f"Plot saved successfully to: {loadings_plot_path.name}")
 
 
 # =============================================================================
-# TASK 5: LOGISTIC REGRESSION WITH 5-FOLD CV PIPELINE
+# STEP 5: LOGISTIC REGRESSION WITH 5-FOLD CV PIPELINE
 # =============================================================================
 print("\n" + "=" * 80)
-print("TASK 5: LOGISTIC REGRESSION WITH 5-FOLD CROSS-VALIDATION")
+print("STEP 5: LOGISTIC REGRESSION WITH 5-FOLD CROSS-VALIDATION")
 print("=" * 80)
 
 # Stratified 5-Fold Cross-Validation ensures balanced class proportions
