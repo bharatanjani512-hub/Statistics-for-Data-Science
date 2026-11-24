@@ -1,15 +1,19 @@
 """
-Generates a 100% clean, perfectly spaced multi-page PDF formatted exactly like Practical 5:
-- Times New Roman font
-- Centered, bold, underlined title
-- Q.1 to Q.5 with Ans, INPUT, OUTPUT
-- Follow-up Q.6 and Q.7
-- Conclusion and Sign-off
+Generates an 8-page clean, perfectly spaced PDF formatted in Times New Roman following Practical 5:
+- Page 1: Mandatory Exam Instructions & Answers (Q1: Prompt, Q2: GitHub Link, Q3: Output Screenshots, Q4: Step Explanation Overview)
+- Page 2: Step 1: Standardise 30 Features & Fit Full PCA (Input & Output)
+- Page 3: Step 2: Scree Plot & Cumulative Explained Variance (+ Plot)
+- Page 4: Step 3: Biopsy Samples on PC1 vs PC2 (+ Plot)
+- Page 5: Step 4: Top 5 Absolute Loadings on PC1 and PC2 (+ Plot)
+- Page 6: Step 5: 5-Fold Cross-Validation Logistic Regression Pipeline (+ Plot)
+- Page 7: Follow-up Question 1: Variance Share, Dominance & Standardisation Impact
+- Page 8: Follow-up Question 2: Lab Recommendation, Interpretability, Conclusion & Sign-Off
 """
 
 import os
 os.environ["MPLCONFIGDIR"] = "/tmp/matplotlib_cache"
 from pathlib import Path
+import shutil
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.image as mpimg
@@ -17,34 +21,106 @@ import matplotlib.image as mpimg
 project_dir = Path(__file__).parent
 output_dir = project_dir / "output"
 pdf_path = project_dir / "Anjani_Finalpractical.pdf"
+workspace_pdf_path = Path("/Users/anjanibharatchauhan/Documents/Developer/Statistics for DS/Anjani_Finalpractical.pdf")
 
 print(f"Generating clean PDF at: {pdf_path}")
 
 plt.rcParams["font.family"] = "serif"
 
-def draw_header(ax, title_text):
-    ax.text(0.5, 0.94, title_text, ha="center", va="top", fontsize=15, fontweight="bold")
-    ax.plot([0.15, 0.85], [0.89, 0.89], color="black", lw=1.2)
+def draw_header(ax, title_text, subtitle=None):
+    ax.text(0.5, 0.96, title_text, ha="center", va="top", fontsize=14, fontweight="bold")
+    if subtitle:
+        ax.text(0.5, 0.925, subtitle, ha="center", va="top", fontsize=9.5, style="italic")
+        ax.plot([0.08, 0.92], [0.90, 0.90], color="#222222", lw=1.2)
+    else:
+        ax.plot([0.15, 0.85], [0.91, 0.91], color="#222222", lw=1.2)
 
-def draw_code_box(ax, y_top, label, code_str, height=0.30):
-    ax.text(0.08, y_top, label, fontsize=11, fontweight="bold")
-    box_y = y_top - height - 0.02
+def draw_code_box(ax, y_top, label, code_str, height=0.30, font_size=8):
+    ax.text(0.08, y_top, label, fontsize=10.5, fontweight="bold")
+    box_y = y_top - height - 0.015
     rect = plt.Rectangle((0.08, box_y), 0.84, height, facecolor="#181818", edgecolor="#333333", zorder=2)
     ax.add_patch(rect)
-    ax.text(0.10, y_top - 0.04, code_str, fontsize=8, family="monospace", color="#d4d4d4", va="top", zorder=3)
+    ax.text(0.10, y_top - 0.035, code_str, fontsize=font_size, family="monospace", color="#d4d4d4", va="top", zorder=3)
     return box_y
 
 with PdfPages(pdf_path) as pdf:
     # -------------------------------------------------------------------------
-    # PAGE 1: Title & Question 1
+    # PAGE 1: Exam Submission Instructions & Direct Answers (Q1 to Q4)
     # -------------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=(8.5, 11), dpi=150)
     ax.axis("off")
-    draw_header(ax, "PRACTICAL 11 - SIMPLIFYING A CANCER\nDIAGNOSTIC PANEL")
+    draw_header(ax, "PRACTICAL EXAM: SIMPLIFYING A CANCER DIAGNOSTIC PANEL", 
+                "MSc Data Science | Shoolini University | Student: Anjani Bharat (Reg. No: PGD202563026)")
+    
+    sec1_title = "SECTION 1: EXAM SUBMISSION REQUIREMENTS & ANSWERS"
+    ax.text(0.08, 0.87, sec1_title, fontsize=11, fontweight="bold")
+    ax.plot([0.08, 0.92], [0.855, 0.855], color="#888888", lw=0.8)
+
+    q1_text = (
+        "Q.1) You are required to submit the prompt you used to write the code and find out the result.\n"
+        "Ans. Below is the exact prompt I formulated and utilized to generate the analytical code and results:"
+    )
+    ax.text(0.08, 0.84, q1_text, fontsize=9.2, va="top", linespacing=1.25)
+
+    prompt_str = (
+        '"""\n'
+        'PROMPT:\n'
+        'Act as an expert data scientist and biostatistician. Write an end-to-end Python script using the\n'
+        'Breast Cancer Wisconsin Diagnostic dataset from scikit-learn to simplify a diagnostic panel with PCA:\n'
+        '1. Standardise the 30 cell nucleus biopsy features using StandardScaler and fit full 30-component PCA.\n'
+        '2. Plot a scree plot and cumulative variance curve; report components needed for >= 90% and >= 95% variance.\n'
+        '3. Project samples onto PC1 vs PC2 and scatter plot colored by tumor diagnosis (Malignant vs Benign).\n'
+        '4. Identify and visualize the top 5 features with the largest absolute loadings on PC1 and PC2.\n'
+        '5. Build an sklearn Pipeline (StandardScaler + PCA(k=7) + LogisticRegression) with 5-fold cross-validation\n'
+        '   accuracy to compare against the full 30-feature baseline without data leakage.\n'
+        '6. Address analytical questions on why standardisation changes variance distribution, and evaluate clinical\n'
+        '   recommendations for adopting the reduced panel in a diagnostic hospital laboratory.\n'
+        'Save all plots at 300 DPI in output/ directory.\n'
+        '"""'
+    )
+    y_box1 = draw_code_box(ax, 0.77, "SUBMITTED PROMPT", prompt_str, height=0.18, font_size=7.2)
+
+    q2_text = (
+        "Q.2) Provide the link of the Github where you have publish your code.\n"
+        "Ans. I have published the complete code, documentation, and outputs in my GitHub repository:\n"
+        "   • Main Repository: https://github.com/bharatanjani512-hub/Statistics-for-Data-Science\n"
+        "   • Practical 11 Directory: https://github.com/bharatanjani512-hub/Statistics-for-Data-Science/tree/main/Anjani_Finalpractical\n"
+        "   • Execution Script: practical11.py"
+    )
+    ax.text(0.08, y_box1 - 0.02, q2_text, fontsize=9.2, va="top", linespacing=1.25)
+
+    q3_text = (
+        "Q.3) Provide the screenshots of the outputs.\n"
+        "Ans. All visual output plots generated by practical11.py have been rendered at 300 DPI and embedded\n"
+        "directly in this report:\n"
+        "   1. Scree Plot & Cumulative Explained Variance Plot -> Embedded in Step 2 (Page 3)\n"
+        "   2. 2D Scatter Projection of Biopsies on PC1 vs PC2 -> Embedded in Step 3 (Page 4)\n"
+        "   3. Top 5 Absolute Feature Loadings on PC1 & PC2 Bar Chart -> Embedded in Step 4 (Page 5)\n"
+        "   4. 5-Fold Cross-Validation Accuracy Comparison Bar Chart -> Embedded in Step 5 (Page 6)\n"
+        "   5. Detailed numerical console outputs -> Embedded in each corresponding Step."
+    )
+    ax.text(0.08, y_box1 - 0.14, q3_text, fontsize=9.2, va="top", linespacing=1.25)
+
+    q4_text = (
+        "Q.4) Please provide the explaination of each step done.\n"
+        "Ans. In Section 2 of this report (Pages 2–8), I have provided a comprehensive first-person explanation of\n"
+        "each step done, including mathematical formulation, Python code inputs, terminal outputs, output screenshots,\n"
+        "and detailed answers to the clinical and analytical follow-up questions."
+    )
+    ax.text(0.08, y_box1 - 0.28, q4_text, fontsize=9.2, va="top", linespacing=1.25)
+
+    pdf.savefig(fig)
+    plt.close()
+
+    # -------------------------------------------------------------------------
+    # PAGE 2: Step 1: Standardise 30 Features & Fit Full PCA
+    # -------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(8.5, 11), dpi=150)
+    ax.axis("off")
+    draw_header(ax, "SECTION 2: STEP-BY-STEP PRACTICAL EXECUTION & ANALYSIS")
     
     q1_text = (
-        "Q.1) Standardise the 30 features of cell nuclei from breast-tissue biopsies\n"
-        "and fit PCA with all components.\n\n"
+        "Step 1: Standardise 30 Features of Cell Nuclei Biopsies & Fit Full PCA\n\n"
         "Ans. The 30 cell nucleus features operate on drastically different physical units (e.g.,\n"
         "mean area in hundreds of square micrometers vs. fractal dimension < 0.1). Using\n"
         "StandardScaler, I standardized each feature to zero mean (μ = 0) and unit variance\n"
@@ -55,7 +131,7 @@ with PdfPages(pdf_path) as pdf:
     
     code1 = (
         "# ============================================================\n"
-        "# QUESTION 1: STANDARDISE 30 FEATURES & FIT FULL PCA\n"
+        "# STEP 1: STANDARDISE 30 FEATURES & FIT FULL PCA\n"
         "# ============================================================\n"
         "from sklearn.datasets import load_breast_cancer\n"
         "from sklearn.preprocessing import StandardScaler\n"
@@ -82,13 +158,12 @@ with PdfPages(pdf_path) as pdf:
     plt.close()
 
     # -------------------------------------------------------------------------
-    # PAGE 2: Question 2
+    # PAGE 3: Step 2: Scree Plot & Cumulative Explained Variance
     # -------------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=(8.5, 11), dpi=150)
     ax.axis("off")
     q2_text = (
-        "Q.2) Draw a scree plot and a cumulative explained-variance plot. Report how\n"
-        "many components explain at least 90% and 95% of the variance.\n\n"
+        "Step 2: Scree Plot & Cumulative Explained Variance Analysis\n\n"
         "Ans. In my variance decomposition, PC1 explains 44.27% of the total variance, and\n"
         "PC2 explains 18.97% (63.24% combined).\n"
         "• To explain at least 90% of the variance, I found that k = 7 components are required\n"
@@ -108,7 +183,7 @@ with PdfPages(pdf_path) as pdf:
     )
     y_after_code = draw_code_box(ax, 0.72, "INPUT", code2, height=0.15)
     
-    ax.text(0.08, y_after_code - 0.03, "OUTPUT", fontsize=11, fontweight="bold")
+    ax.text(0.08, y_after_code - 0.03, "OUTPUT SCREENSHOT", fontsize=11, fontweight="bold")
     img2 = mpimg.imread(output_dir / "task2_scree_and_cumulative_variance.png")
     ax_img2 = fig.add_axes([0.08, 0.05, 0.84, 0.43])
     ax_img2.imshow(img2)
@@ -117,12 +192,12 @@ with PdfPages(pdf_path) as pdf:
     plt.close()
 
     # -------------------------------------------------------------------------
-    # PAGE 3: Question 3
+    # PAGE 4: Step 3: Biopsy Samples on PC1 vs PC2
     # -------------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=(8.5, 11), dpi=150)
     ax.axis("off")
     q3_text = (
-        "Q.3) Plot the samples on PC1 vs PC2, coloured by diagnosis.\n\n"
+        "Step 3: 2D Biopsy Projection on PC1 vs PC2 (Coloured by Diagnosis)\n\n"
         "Ans. When I projected the 569 biopsy samples onto the first two principal component\n"
         "axes, I observed a clear separation between malignant and benign tumors along PC1.\n"
         "Malignant biopsies concentrate heavily on positive PC1 scores (higher nuclear size,\n"
@@ -143,7 +218,7 @@ with PdfPages(pdf_path) as pdf:
     )
     y_after_code = draw_code_box(ax, 0.74, "INPUT", code3, height=0.19)
     
-    ax.text(0.08, y_after_code - 0.03, "OUTPUT", fontsize=11, fontweight="bold")
+    ax.text(0.08, y_after_code - 0.03, "OUTPUT SCREENSHOT", fontsize=11, fontweight="bold")
     img3 = mpimg.imread(output_dir / "task3_pc1_vs_pc2_diagnosis.png")
     ax_img3 = fig.add_axes([0.15, 0.05, 0.70, 0.43])
     ax_img3.imshow(img3)
@@ -152,12 +227,12 @@ with PdfPages(pdf_path) as pdf:
     plt.close()
 
     # -------------------------------------------------------------------------
-    # PAGE 4: Question 4
+    # PAGE 5: Step 4: Top 5 Absolute Loadings on PC1 and PC2
     # -------------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=(8.5, 11), dpi=150)
     ax.axis("off")
     q4_text = (
-        "Q.4) Print the five features with the largest absolute loadings on PC1 and on PC2.\n\n"
+        "Step 4: Top 5 Features with Largest Absolute Loadings on PC1 and PC2\n\n"
         "Ans. In my loading analysis, PC1 is primarily driven by cell shape concavity and boundary\n"
         "irregularity, while PC2 is driven by fractal dimension and fine texture variation.\n\n"
         "Top 5 Features on PC1:\n"
@@ -179,7 +254,7 @@ with PdfPages(pdf_path) as pdf:
     )
     y_after_code = draw_code_box(ax, 0.63, "INPUT", code4, height=0.13)
     
-    ax.text(0.08, y_after_code - 0.03, "OUTPUT", fontsize=11, fontweight="bold")
+    ax.text(0.08, y_after_code - 0.03, "OUTPUT SCREENSHOT", fontsize=11, fontweight="bold")
     img4 = mpimg.imread(output_dir / "task4_pca_loadings.png")
     ax_img4 = fig.add_axes([0.08, 0.05, 0.84, 0.38])
     ax_img4.imshow(img4)
@@ -188,14 +263,12 @@ with PdfPages(pdf_path) as pdf:
     plt.close()
 
     # -------------------------------------------------------------------------
-    # PAGE 5: Question 5
+    # PAGE 6: Step 5: 5-Fold Cross-Validation Logistic Regression Pipeline
     # -------------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=(8.5, 11), dpi=150)
     ax.axis("off")
     q5_text = (
-        "Q.5) Train a logistic regression (5-fold CV accuracy) on (a) all 30 standardised\n"
-        "features and (b) only the first k components, where k gives 90% variance. Fit the\n"
-        "scaler and PCA inside a Pipeline so there is no leakage.\n\n"
+        "Step 5: Logistic Regression Pipeline (5-Fold CV Accuracy Comparison)\n\n"
         "Ans. To prevent data leakage, I encapsulated both StandardScaler and PCA within\n"
         "sklearn.pipeline.Pipeline, fitting them strictly on the training partition of each fold:\n"
         "• Model (a) All 30 Standardised Features: 97.37% (± 1.66%)\n"
@@ -216,7 +289,7 @@ with PdfPages(pdf_path) as pdf:
     )
     y_after_code = draw_code_box(ax, 0.69, "INPUT", code5, height=0.19)
     
-    ax.text(0.08, y_after_code - 0.03, "OUTPUT", fontsize=11, fontweight="bold")
+    ax.text(0.08, y_after_code - 0.03, "OUTPUT SCREENSHOT", fontsize=11, fontweight="bold")
     img5 = mpimg.imread(output_dir / "task5_model_cv_comparison.png")
     ax_img5 = fig.add_axes([0.18, 0.05, 0.64, 0.38])
     ax_img5.imshow(img5)
@@ -225,13 +298,13 @@ with PdfPages(pdf_path) as pdf:
     plt.close()
 
     # -------------------------------------------------------------------------
-    # PAGE 6: Follow-up Question 1
+    # PAGE 7: Follow-up Question 1
     # -------------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=(8.5, 11), dpi=150)
     ax.axis("off")
     
     q6_text = (
-        "Q.6) Follow-up Question 1: What share of variance does PC1 now explain, and which\n"
+        "Follow-up Question 1: What share of variance does PC1 now explain, and which\n"
         "feature dominates it? Explain why standardisation changes the result so much.\n\n"
         "Ans.\n"
         "1. Share of Variance & Dominant Feature (Standardised):\n"
@@ -259,13 +332,13 @@ with PdfPages(pdf_path) as pdf:
     plt.close()
 
     # -------------------------------------------------------------------------
-    # PAGE 7: Follow-up Question 2, Conclusion & Sign-Off
+    # PAGE 8: Follow-up Question 2, Conclusion & Sign-Off
     # -------------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=(8.5, 11), dpi=150)
     ax.axis("off")
     
     q7_text = (
-        "Q.7) Follow-up Question 2: Would you recommend the reduced panel to the lab? Give\n"
+        "Follow-up Question 2: Would you recommend the reduced panel to the lab? Give\n"
         "one statistical and one practical reason, and say what you lose in interpretability.\n\n"
         "Ans. Yes, I would recommend the reduced panel (k = 7) to the hospital laboratory.\n\n"
         "1. Statistical Reason:\n"
@@ -305,11 +378,15 @@ with PdfPages(pdf_path) as pdf:
     
     signoff = (
         "Submitted by: Anjani Bharat\n"
-        "Registration Number: PGD202563026"
+        "Registration Number: PGD202563026\n"
+        "Degree: MSc Data Science | Shoolini University"
     )
     ax.text(0.08, 0.12, signoff, fontsize=11, va="top", linespacing=1.45, fontweight="bold")
     
     pdf.savefig(fig)
     plt.close()
 
+# Copy to root workspace
+shutil.copy2(pdf_path, workspace_pdf_path)
 print(f"Generated clean Practical 5 styled PDF: {pdf_path}")
+print(f"Copied to workspace root: {workspace_pdf_path}")
