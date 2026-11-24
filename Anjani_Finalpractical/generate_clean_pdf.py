@@ -1,6 +1,7 @@
 """
 Generates an 8-page clean, perfectly spaced PDF formatted in Times New Roman following Practical 5:
-- Page 1: Mandatory Exam Instructions & Answers (Q1: Prompt, Q2: GitHub Link, Q3: Output Screenshots, Q4: Step Explanation Overview)
+- All GitHub links are fully interactive and clickable (/URI annotations).
+- Page 1: Mandatory Exam Instructions & Answers (Q1: Prompt, Q2: Clickable GitHub Link & Button, Q3: Output Screenshots, Q4: Step Explanation Overview)
 - Page 2: Step 1: Standardise 30 Features & Fit Full PCA (Input & Output)
 - Page 3: Step 2: Scree Plot & Cumulative Explained Variance (+ Plot)
 - Page 4: Step 3: Biopsy Samples on PC1 vs PC2 (+ Plot)
@@ -8,6 +9,7 @@ Generates an 8-page clean, perfectly spaced PDF formatted in Times New Roman fol
 - Page 6: Step 5: 5-Fold Cross-Validation Logistic Regression Pipeline (+ Plot)
 - Page 7: Follow-up Question 1: Variance Share, Dominance & Standardisation Impact
 - Page 8: Follow-up Question 2: Lab Recommendation, Interpretability, Conclusion & Sign-Off
+- Clickable repository link in footer across all pages.
 """
 
 import os
@@ -23,17 +25,26 @@ output_dir = project_dir / "output"
 pdf_path = project_dir / "Anjani_Finalpractical.pdf"
 workspace_pdf_path = Path("/Users/anjanibharatchauhan/Documents/Developer/Statistics for DS/Anjani_Finalpractical.pdf")
 
-print(f"Generating clean PDF at: {pdf_path}")
+final_repo_url = "https://github.com/bharatanjani512-hub/Statistics-for-Data-Science/tree/main/Anjani_Finalpractical"
+main_repo_url = "https://github.com/bharatanjani512-hub/Statistics-for-Data-Science"
+
+print(f"Generating clean PDF with interactive links at: {pdf_path}")
 
 plt.rcParams["font.family"] = "serif"
 
 def draw_header(ax, title_text, subtitle=None):
-    ax.text(0.5, 0.96, title_text, ha="center", va="top", fontsize=14, fontweight="bold")
+    ax.text(0.5, 0.965, title_text, ha="center", va="top", fontsize=14, fontweight="bold")
     if subtitle:
-        ax.text(0.5, 0.925, subtitle, ha="center", va="top", fontsize=9.5, style="italic")
-        ax.plot([0.08, 0.92], [0.90, 0.90], color="#222222", lw=1.2)
+        ax.text(0.5, 0.932, subtitle, ha="center", va="top", fontsize=9.2, style="italic")
+        ax.plot([0.08, 0.92], [0.910, 0.910], color="#222222", lw=1.2)
     else:
-        ax.plot([0.15, 0.85], [0.91, 0.91], color="#222222", lw=1.2)
+        ax.plot([0.15, 0.85], [0.925, 0.925], color="#222222", lw=1.2)
+
+def draw_footer(ax, page_num):
+    ax.plot([0.08, 0.92], [0.045, 0.045], color="#cccccc", lw=0.8)
+    ax.text(0.08, 0.028, "GitHub Repository: ", fontsize=7.5, color="#555555", va="center")
+    ax.text(0.23, 0.028, final_repo_url, fontsize=7.5, color="#0969da", fontweight="bold", url=final_repo_url, va="center")
+    ax.text(0.92, 0.028, f"Page {page_num} of 8", fontsize=7.5, color="#555555", ha="right", va="center")
 
 def draw_code_box(ax, y_top, label, code_str, height=0.30, font_size=8):
     ax.text(0.08, y_top, label, fontsize=10.5, fontweight="bold")
@@ -53,14 +64,12 @@ with PdfPages(pdf_path) as pdf:
                 "MSc Data Science | Shoolini University | Student: Anjani Bharat (Reg. No: PGD202563026)")
     
     sec1_title = "SECTION 1: EXAM SUBMISSION REQUIREMENTS & ANSWERS"
-    ax.text(0.08, 0.87, sec1_title, fontsize=11, fontweight="bold")
-    ax.plot([0.08, 0.92], [0.855, 0.855], color="#888888", lw=0.8)
+    ax.text(0.08, 0.885, sec1_title, fontsize=11, fontweight="bold")
+    ax.plot([0.08, 0.92], [0.872, 0.872], color="#888888", lw=0.8)
 
-    q1_text = (
-        "Q.1) You are required to submit the prompt you used to write the code and find out the result.\n"
-        "Ans. Below is the exact prompt I formulated and utilized to generate the analytical code and results:"
-    )
-    ax.text(0.08, 0.84, q1_text, fontsize=9.2, va="top", linespacing=1.25)
+    # Q1
+    ax.text(0.08, 0.855, "Q.1) You are required to submit the prompt you used to write the code and find out the result.", fontsize=9.2, fontweight="bold", va="top")
+    ax.text(0.08, 0.838, "Ans. Below is the exact prompt I formulated and utilized to generate the analytical code and results:", fontsize=9.0, va="top")
 
     prompt_str = (
         '"""\n'
@@ -78,19 +87,29 @@ with PdfPages(pdf_path) as pdf:
         'Save all plots at 300 DPI in output/ directory.\n'
         '"""'
     )
-    y_box1 = draw_code_box(ax, 0.77, "SUBMITTED PROMPT", prompt_str, height=0.18, font_size=7.2)
+    y_box1 = draw_code_box(ax, 0.775, "SUBMITTED PROMPT", prompt_str, height=0.175, font_size=7.2)
 
-    q2_text = (
-        "Q.2) Provide the link of the Github where you have publish your code.\n"
-        "Ans. I have published the complete code, documentation, and outputs in my GitHub repository:\n"
-        "   • Main Repository: https://github.com/bharatanjani512-hub/Statistics-for-Data-Science\n"
-        "   • Practical 11 Directory: https://github.com/bharatanjani512-hub/Statistics-for-Data-Science/tree/main/Anjani_Finalpractical\n"
-        "   • Execution Script: practical11.py"
-    )
-    ax.text(0.08, y_box1 - 0.02, q2_text, fontsize=9.2, va="top", linespacing=1.25)
+    # Q2: Clickable GitHub Link
+    ax.text(0.08, 0.565, "Q.2) Provide the link of the Github where you have publish your code.", fontsize=9.2, fontweight="bold", va="top")
+    ax.text(0.08, 0.547, "Ans. I have published the complete code, documentation, and outputs in my GitHub repository:", fontsize=9.0, va="top")
+    
+    # Clickable interactive Button for Practical 11
+    rect_btn = plt.Rectangle((0.08, 0.495), 0.84, 0.036, facecolor="#eef6ff", edgecolor="#0969da", lw=1.2, zorder=2)
+    ax.add_patch(rect_btn)
+    ax.text(0.50, 0.513, "Click Here to Open: https://github.com/bharatanjani512-hub/.../Anjani_Finalpractical", 
+            ha="center", va="center", color="#0969da", fontsize=8.8, fontweight="bold", url=final_repo_url, zorder=3)
 
+    ax.text(0.08, 0.480, "   • Practical 11 Folder:", fontsize=8.6, fontweight="bold", va="top")
+    ax.text(0.24, 0.480, final_repo_url, fontsize=8.2, color="#0969da", fontweight="bold", url=final_repo_url, va="top")
+    
+    ax.text(0.08, 0.460, "   • Main Repository:", fontsize=8.6, va="top")
+    ax.text(0.24, 0.460, main_repo_url, fontsize=8.2, color="#0969da", url=main_repo_url, va="top")
+    
+    ax.text(0.08, 0.440, "   • Execution Script: practical11.py", fontsize=8.6, color="#333333", va="top")
+
+    # Q3
+    ax.text(0.08, 0.412, "Q.3) Provide the screenshots of the outputs.", fontsize=9.2, fontweight="bold", va="top")
     q3_text = (
-        "Q.3) Provide the screenshots of the outputs.\n"
         "Ans. All visual output plots generated by practical11.py have been rendered at 300 DPI and embedded\n"
         "directly in this report:\n"
         "   1. Scree Plot & Cumulative Explained Variance Plot -> Embedded in Step 2 (Page 3)\n"
@@ -99,16 +118,18 @@ with PdfPages(pdf_path) as pdf:
         "   4. 5-Fold Cross-Validation Accuracy Comparison Bar Chart -> Embedded in Step 5 (Page 6)\n"
         "   5. Detailed numerical console outputs -> Embedded in each corresponding Step."
     )
-    ax.text(0.08, y_box1 - 0.14, q3_text, fontsize=9.2, va="top", linespacing=1.25)
+    ax.text(0.08, 0.394, q3_text, fontsize=8.8, va="top", linespacing=1.22)
 
+    # Q4
+    ax.text(0.08, 0.265, "Q.4) Please provide the explaination of each step done.", fontsize=9.2, fontweight="bold", va="top")
     q4_text = (
-        "Q.4) Please provide the explaination of each step done.\n"
         "Ans. In Section 2 of this report (Pages 2–8), I have provided a comprehensive first-person explanation of\n"
         "each step done, including mathematical formulation, Python code inputs, terminal outputs, output screenshots,\n"
         "and detailed answers to the clinical and analytical follow-up questions."
     )
-    ax.text(0.08, y_box1 - 0.28, q4_text, fontsize=9.2, va="top", linespacing=1.25)
+    ax.text(0.08, 0.247, q4_text, fontsize=8.8, va="top", linespacing=1.22)
 
+    draw_footer(ax, 1)
     pdf.savefig(fig)
     plt.close()
 
@@ -154,6 +175,7 @@ with PdfPages(pdf_path) as pdf:
         "Transformed coordinates matrix shape: (569, 30)"
     )
     draw_code_box(ax, y_after_code - 0.03, "OUTPUT", out1, height=0.15)
+    draw_footer(ax, 2)
     pdf.savefig(fig)
     plt.close()
 
@@ -185,9 +207,10 @@ with PdfPages(pdf_path) as pdf:
     
     ax.text(0.08, y_after_code - 0.03, "OUTPUT SCREENSHOT", fontsize=11, fontweight="bold")
     img2 = mpimg.imread(output_dir / "task2_scree_and_cumulative_variance.png")
-    ax_img2 = fig.add_axes([0.08, 0.05, 0.84, 0.43])
+    ax_img2 = fig.add_axes([0.08, 0.07, 0.84, 0.41])
     ax_img2.imshow(img2)
     ax_img2.axis("off")
+    draw_footer(ax, 3)
     pdf.savefig(fig)
     plt.close()
 
@@ -220,9 +243,10 @@ with PdfPages(pdf_path) as pdf:
     
     ax.text(0.08, y_after_code - 0.03, "OUTPUT SCREENSHOT", fontsize=11, fontweight="bold")
     img3 = mpimg.imread(output_dir / "task3_pc1_vs_pc2_diagnosis.png")
-    ax_img3 = fig.add_axes([0.15, 0.05, 0.70, 0.43])
+    ax_img3 = fig.add_axes([0.15, 0.07, 0.70, 0.41])
     ax_img3.imshow(img3)
     ax_img3.axis("off")
+    draw_footer(ax, 4)
     pdf.savefig(fig)
     plt.close()
 
@@ -256,9 +280,10 @@ with PdfPages(pdf_path) as pdf:
     
     ax.text(0.08, y_after_code - 0.03, "OUTPUT SCREENSHOT", fontsize=11, fontweight="bold")
     img4 = mpimg.imread(output_dir / "task4_pca_loadings.png")
-    ax_img4 = fig.add_axes([0.08, 0.05, 0.84, 0.38])
+    ax_img4 = fig.add_axes([0.08, 0.07, 0.84, 0.36])
     ax_img4.imshow(img4)
     ax_img4.axis("off")
+    draw_footer(ax, 5)
     pdf.savefig(fig)
     plt.close()
 
@@ -291,9 +316,10 @@ with PdfPages(pdf_path) as pdf:
     
     ax.text(0.08, y_after_code - 0.03, "OUTPUT SCREENSHOT", fontsize=11, fontweight="bold")
     img5 = mpimg.imread(output_dir / "task5_model_cv_comparison.png")
-    ax_img5 = fig.add_axes([0.18, 0.05, 0.64, 0.38])
+    ax_img5 = fig.add_axes([0.18, 0.07, 0.64, 0.36])
     ax_img5.imshow(img5)
     ax_img5.axis("off")
+    draw_footer(ax, 6)
     pdf.savefig(fig)
     plt.close()
 
@@ -328,6 +354,7 @@ with PdfPages(pdf_path) as pdf:
         "   indicators rather than measurement unit artifacts."
     )
     ax.text(0.08, 0.94, q6_text, fontsize=9.8, va="top", linespacing=1.35)
+    draw_footer(ax, 7)
     pdf.savefig(fig)
     plt.close()
 
@@ -381,8 +408,15 @@ with PdfPages(pdf_path) as pdf:
         "Registration Number: PGD202563026\n"
         "Degree: MSc Data Science | Shoolini University"
     )
-    ax.text(0.08, 0.12, signoff, fontsize=11, va="top", linespacing=1.45, fontweight="bold")
+    ax.text(0.08, 0.14, signoff, fontsize=10.5, va="top", linespacing=1.4, fontweight="bold")
     
+    # Clickable link box at bottom of conclusion
+    rect_sign = plt.Rectangle((0.08, 0.055), 0.84, 0.035, facecolor="#eef6ff", edgecolor="#0969da", lw=1.0, zorder=2)
+    ax.add_patch(rect_sign)
+    ax.text(0.50, 0.0725, "Practical 11 Repository: " + final_repo_url, 
+            ha="center", va="center", color="#0969da", fontsize=8.0, fontweight="bold", url=final_repo_url, zorder=3)
+
+    draw_footer(ax, 8)
     pdf.savefig(fig)
     plt.close()
 
